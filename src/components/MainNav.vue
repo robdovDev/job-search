@@ -10,17 +10,28 @@
             </li>
           </ul>
         </nav>
+        <div class="ml-auto flex h-full items-center">
+          <profile-image v-if="isLoggedIn" @click="logoutUser" />
+          <action-button v-else @click="loginUser" />
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import ActionButton from '@/components/ActionButton.vue'
+import ProfileImage from '@/components/ProfileImage.vue'
+
 export default {
   name: 'MainNav',
+  components: {
+    ActionButton,
+    ProfileImage
+  },
   data() {
     return {
-      company: 'BDRET Careers',
+      company: 'BDNet',
       url: 'https://careers.google.com',
       menuItems: [
         { menuName: 'Teams', url: '/teams', ml: '' },
@@ -29,7 +40,13 @@ export default {
         { menuName: 'How we hire', url: '/how-we-hire', ml: 'ml-9' },
         { menuName: 'Students', url: '/students', ml: 'ml-9' },
         { menuName: 'Jobs', url: '/jobs', ml: 'ml-9' }
-      ]
+      ],
+      isLoggedIn: false
+    }
+  },
+  methods: {
+    loginUser() {
+      this.isLoggedIn = true
     }
   }
 }
