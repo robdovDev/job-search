@@ -4,13 +4,22 @@ import userEvent from '@testing-library/user-event'
 import MainNav from '@/components/MainNav.vue'
 
 describe('MainNav', () => {
+  const renderMainNav = () => {
+    render(MainNav, {
+      global: {
+        stubs: {
+          FontAwesomeIcon: true
+        }
+      }
+    })
+  }
   it('displays the company name', () => {
-    render(MainNav)
+    renderMainNav()
     const coName = screen.getByText('BDNet')
     expect(coName).toBeInTheDocument()
   })
   it('displays menu navigation items', () => {
-    render(MainNav)
+    renderMainNav()
     const navItems = screen.getAllByRole('listitem')
     const navTexts = navItems.map((item) => item.textContent)
     expect(navTexts).toEqual([
@@ -25,7 +34,7 @@ describe('MainNav', () => {
 
   describe('when the user logs in', () => {
     it('displays the profile picture', async () => {
-      render(MainNav)
+      renderMainNav()
       let profileImage = screen.queryByRole('img', {
         name: /user profile image/i
       })
@@ -40,6 +49,37 @@ describe('MainNav', () => {
         name: /user profile image/i
       })
       expect(profileImage).toBeInTheDocument()
+    })
+  })
+
+  describe('when the user logs out', () => {
+    it('displays the displays the sign in button', async () => {
+      render(MainNav, {
+        global: {
+          stubs: {
+            FontAwesomeIcon: true
+          }
+        },
+        data() {
+          return {
+            isLoggedIn: true
+          }
+        }
+      })
+      let loginButton = screen.queryByRole('button', {
+        name: /sign in/i
+      })
+      expect(loginButton).not.toBeInTheDocument()
+
+      const profileImage = screen.getByRole('img', {
+        name: /user profile image/i
+      })
+      await userEvent.click(profileImage)
+
+      loginButton = screen.getByRole('button', {
+        name: /sign in/i
+      })
+      expect(loginButton).toBeInTheDocument()
     })
   })
 })
