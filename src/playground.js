@@ -1,6 +1,7 @@
-const favoriteFood = 'sushi'
+const interval = setInterval(() => {
+  console.log('two seconds!')
+}, 2000)
 
-const goodFoods = {
-  [favoriteFood]: true
-}
-console.log(goodFoods)
+setTimeout(() => {
+  clearInterval(interval)
+}, 10100)
