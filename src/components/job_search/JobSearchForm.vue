@@ -1,15 +1,15 @@
 <template>
   <form class="flex h-12 w-full items-center rounded-3xl border border-solid border-brand-gray-3">
-    <font-awesome-icon :icon="['fas', 'search']" class="ml-4 mr-3" />
+    <font-awesome-icon
+      :icon="['fas', 'search']"
+      class="ml-4 mr-3"
+    />
     <div class="flex flex-1 flex-nowrap h-full text-base font-light">
       <div class="flex h-full flex-1 relative items-center pr-3">
         <label class="absolute left-0 -top-7">Role</label>
-        <input
-          name="role_input"
-          v-model="role"
-          type="text"
+        <text-input
           placeholder="Software Engineer"
-          class="w-full text-lg font-normal focus:outline-none"
+          v-model="role"
         />
       </div>
       <span
@@ -19,31 +19,34 @@
       </span>
       <div class="flex h-full flex-1 relative items-center pl-3">
         <label class="absolute left-0 -top-7 ml-3">Where?</label>
-        <input
-          name="location_input"
-          v-model="location"
-          type="text"
+        <text-input
           placeholder="Los Angeles"
-          class="w-full text-lg font-normal focus:outline-none"
+          v-model="location"
         />
       </div>
     </div>
-    <action-button text="Search" type="secondary" class="rounded-r-3xl" />
+    <action-button
+      text="Search"
+      type="secondary"
+      class="rounded-r-3xl"
+    />
   </form>
 </template>
 
 <script>
-import ActionButton from '@/components/shared/ActionButton.vue'
+import ActionButton from "@/components/shared/ActionButton.vue"
+import TextInput from "@/components/shared/TextInput.vue"
 
 export default {
-  name: 'JobSearchForm',
+  name: "JobSearchForm",
   components: {
-    ActionButton
+    ActionButton,
+    TextInput
   },
   data() {
     return {
-      role: '',
-      location: ''
+      role: "",
+      location: ""
     }
   }
 }
