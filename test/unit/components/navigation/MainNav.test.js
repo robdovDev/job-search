@@ -1,59 +1,61 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { render, screen } from "@testing-library/vue"
+import userEvent from "@testing-library/user-event"
+import { RouterLinkStub } from "@vue/test-utils"
 
-import MainNav from '@/components/navigation/MainNav.vue'
+import MainNav from "@/components/navigation/MainNav.vue"
 
-describe('MainNav', () => {
+describe("MainNav", () => {
   const renderMainNav = () => {
     render(MainNav, {
       global: {
         stubs: {
-          FontAwesomeIcon: true
+          FontAwesomeIcon: true,
+          RouterLink: RouterLinkStub
         }
       }
     })
   }
-  it('displays the company name', () => {
+  it("displays the company name", () => {
     renderMainNav()
-    const coName = screen.getByText('BDNet')
+    const coName = screen.getByText("BDNet")
     expect(coName).toBeInTheDocument()
   })
-  it('displays menu navigation items', () => {
+  it("displays menu navigation items", () => {
     renderMainNav()
-    const navItems = screen.getAllByRole('listitem')
+    const navItems = screen.getAllByRole("listitem")
     const navTexts = navItems.map((item) => item.textContent)
     expect(navTexts).toEqual([
-      'Teams',
-      'Locations',
-      'Life at BDRET',
-      'How we hire',
-      'Students',
-      'Jobs'
+      "Teams",
+      "Locations",
+      "Life at BDRET",
+      "How we hire",
+      "Students",
+      "Jobs"
     ])
   })
 
-  describe('when the user logs in', () => {
-    it('displays the profile picture', async () => {
+  describe("when the user logs in", () => {
+    it("displays the profile picture", async () => {
       renderMainNav()
-      let profileImage = screen.queryByRole('img', {
+      let profileImage = screen.queryByRole("img", {
         name: /user profile image/i
       })
       expect(profileImage).not.toBeInTheDocument()
 
-      const loginButton = screen.getByRole('button', {
+      const loginButton = screen.getByRole("button", {
         name: /sign in/i
       })
       await userEvent.click(loginButton)
 
-      profileImage = screen.getByRole('img', {
+      profileImage = screen.getByRole("img", {
         name: /user profile image/i
       })
       expect(profileImage).toBeInTheDocument()
     })
   })
 
-  describe('when the user logs out', () => {
-    it('displays the displays the sign in button', async () => {
+  describe("when the user logs out", () => {
+    it("displays the displays the sign in button", async () => {
       render(MainNav, {
         global: {
           stubs: {
@@ -66,17 +68,17 @@ describe('MainNav', () => {
           }
         }
       })
-      let loginButton = screen.queryByRole('button', {
+      let loginButton = screen.queryByRole("button", {
         name: /sign in/i
       })
       expect(loginButton).not.toBeInTheDocument()
 
-      const profileImage = screen.getByRole('img', {
+      const profileImage = screen.getByRole("img", {
         name: /user profile image/i
       })
       await userEvent.click(profileImage)
 
-      loginButton = screen.getByRole('button', {
+      loginButton = screen.getByRole("button", {
         name: /sign in/i
       })
       expect(loginButton).toBeInTheDocument()
