@@ -1,11 +1,19 @@
 <template>
   <h1 class="text-6xl font-bold">Job Results</h1>
-  <button @click="goToHome">Go to Home</button>
+  <div>{{ role }} in {{ location }}</div>
 </template>
 
 <script>
 export default {
-  mame: "JobResultsView",
+  name: "JobResultsView",
+  computed: {
+    role() {
+      return this.$route.query.role
+    },
+    location() {
+      return this.$route.query.loc
+    }
+  },
   methods: {
     goToHome() {
       this.$router.push({ name: "Home" })

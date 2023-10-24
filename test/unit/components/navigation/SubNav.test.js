@@ -1,36 +1,36 @@
-import { render, screen } from '@testing-library/vue'
-import SubNav from '@/components/navigation/SubNav.vue'
+import { render, screen } from "@testing-library/vue"
+import SubNav from "@/components/navigation/SubNav.vue"
 
-describe('SubNav', () => {
-  describe('when user is on jobs page', () => {
-    it('displays job count', () => {
-      render(SubNav, {
-        global: {
-          stubs: {
-            FontAwesomeIcon: true
-          }
+describe("SubNav", () => {
+  const renderSubNav = (routeName) => {
+    const $route = {
+      name: routeName
+    }
+
+    render(SubNav, {
+      global: {
+        mocks: {
+          $route
         },
-        data() {
-          return {
-            onJobResultsPage: true
-          }
+        stubs: {
+          FontAwesomeIcon: true
         }
-      })
-      const jobCount = screen.getByText('1,653')
+      }
+    })
+  }
+
+  describe("when user is on jobs page", () => {
+    it("displays job count", () => {
+      renderSubNav("JobResults")
+      const jobCount = screen.getByText("1,653")
       expect(jobCount).toBeInTheDocument()
     })
   })
 
-  describe('when user is not on jobs page', () => {
-    it('does not display job count', () => {
-      render(SubNav, {
-        data() {
-          return {
-            onJobResultsPage: false
-          }
-        }
-      })
-      const jobCount = screen.queryByText('1,653')
+  describe("when user is not on jobs page", () => {
+    it("does not display job count", () => {
+      renderSubNav("")
+      const jobCount = screen.queryByText("1,653")
       expect(jobCount).not.toBeInTheDocument()
     })
   })

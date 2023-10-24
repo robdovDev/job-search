@@ -58,12 +58,12 @@ export default {
       company: "BDNet",
       url: "https://careers.google.com",
       menuItems: [
-        { menuName: "Teams", url: "/teams", ml: "" },
-        { menuName: "Locations", url: "/locations", ml: "ml-9" },
-        { menuName: "Life at BDRET", url: "/life-at-bddret", ml: "ml-9" },
-        { menuName: "How we hire", url: "/how-we-hire", ml: "ml-9" },
-        { menuName: "Students", url: "/students", ml: "ml-9" },
-        { menuName: "Jobs", url: "/jobs", ml: "ml-9" }
+        { menuName: "Teams", url: "/" },
+        { menuName: "Locations", url: "/" },
+        { menuName: "Life at BDRET", url: "/" },
+        { menuName: "How we hire", url: "/" },
+        { menuName: "Students", url: "/" },
+        { menuName: "Jobs", url: "/jobs/results" }
       ],
       isLoggedIn: false
     }
