@@ -1,23 +1,19 @@
 <template>
-  <h1 class="text-6xl font-bold">Job Results</h1>
-  <div>{{ role }} in {{ location }}</div>
+  <div class="flex flex-row flex-nowrap w-full">
+    <job-filter-sidebar />
+    <job-listings />
+  </div>
 </template>
 
 <script>
+import JobFilterSidebar from "@/components/job-results/job-filter-sidebar/JobFilterSidebar.vue"
+import JobListings from "@/components/job-results/JobListings.vue"
+
 export default {
   name: "JobResultsView",
-  computed: {
-    role() {
-      return this.$route.query.role
-    },
-    location() {
-      return this.$route.query.loc
-    }
-  },
-  methods: {
-    goToHome() {
-      this.$router.push({ name: "Home" })
-    }
+  components: {
+    JobFilterSidebar,
+    JobListings
   }
 }
 </script>
