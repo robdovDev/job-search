@@ -1,28 +1,39 @@
 <template>
   <li class="mb-7">
     <router-link
-      to="/jobs/results/1"
+      :to="jobLink"
       class="mx-auto block rounded border border-solid border-brand-gray-2 bg-white hover:shadow-gray"
     >
       <div class="mx-8 border-b border-solid border-brand-gray-2 pt-5 pb-2">
-        <h2 class="mb-2 text-2xl">Janitor</h2>
+        <h2 class="mb-2 text-2xl">{{ job.title }}</h2>
         <div class="flex flex-row align-middle">
           <div class="mr-5">
-            <span>BDRET</span>
+            <span>{{ job.organization }}</span>
           </div>
           <div>
-            <span>Camarillo, CA</span>
+            <ul>
+              <li
+                v-for="location in job.locations"
+                :key="location"
+                class="mr-5 inline-block"
+              >
+                {{ location }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
       <div class="px-8 py-4">
         <div>
-          <h3 class="mt-1 mb-2"></h3>
+          <h3 class="mt-1 mb-2">Qualifications</h3>
           <div>
             <ul class="list-disc pl-8">
-              <li>Mop or equivalent</li>
-              <li>1 year experience in cleaning</li>
-              <li>Experience with all kinds of brooms</li>
+              <li
+                v-for="qualification in job.minimumQualifications"
+                :key="qualification"
+              >
+                {{ qualification }}
+              </li>
             </ul>
           </div>
         </div>
@@ -40,7 +51,16 @@
 
 <script>
 export default {
-  name: "JobListing"
+  name: "JobListing",
+  props: {
+    job: Object,
+    required: true
+  },
+  computed: {
+    jobLink() {
+      return `/jobs/results/${this.job.id}`
+    }
+  }
 }
 </script>
 
