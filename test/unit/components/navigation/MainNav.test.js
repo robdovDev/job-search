@@ -5,7 +5,7 @@ import { RouterLinkStub } from "@vue/test-utils"
 import MainNav from "@/components/navigation/MainNav.vue"
 
 describe("MainNav", () => {
-  const renderMainNav = (isLoggedIn) => {
+  const renderMainNav = () => {
     const $route = {
       name: "Home"
     }
@@ -22,7 +22,7 @@ describe("MainNav", () => {
     })
   }
   it("displays the company name", () => {
-    renderMainNav(true)
+    renderMainNav()
     const coName = screen.getByText("BDNet")
     expect(coName).toBeInTheDocument()
   })
@@ -42,7 +42,7 @@ describe("MainNav", () => {
 
   describe("when the user logs in", () => {
     it("displays the profile picture", async () => {
-      renderMainNav(false)
+      renderMainNav()
       let profileImage = screen.queryByRole("img", {
         name: /user profile image/i
       })
@@ -60,23 +60,23 @@ describe("MainNav", () => {
     })
   })
 
-  // describe("when the user logs out", () => {
-  //   it("displays the displays the sign in button", async () => {
-  //     renderMainNav(true)
-  //     let loginButton = screen.queryByRole("button", {
-  //       name: /sign in/i
-  //     })
-  //     expect(loginButton).not.toBeInTheDocument()
+  describe("when the user logs out", () => {
+    it("displays the displays the sign in button", async () => {
+      renderMainNav()
+      let loginButton = screen.queryByRole("button", {
+        name: /sign in/i
+      })
+      await userEvent.click(loginButton)
 
-  //     const profileImage = screen.getByRole("img", {
-  //       name: /user profile image/i
-  //     })
-  //     await userEvent.click(profileImage)
+      const profileImage = screen.getByRole("img", {
+        name: /user profile image/i
+      })
+      await userEvent.click(profileImage)
 
-  //     loginButton = screen.getByRole("button", {
-  //       name: /sign in/i
-  //     })
-  //     expect(loginButton).toBeInTheDocument()
-  //   })
-  // })
+      loginButton = screen.getByRole("button", {
+        name: /sign in/i
+      })
+      expect(loginButton).toBeInTheDocument()
+    })
+  })
 })
