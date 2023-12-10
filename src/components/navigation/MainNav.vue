@@ -42,6 +42,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "pinia"
+import { useUserStore } from "@/stores/user"
+
 import ActionButton from "@/components/shared/ActionButton.vue"
 import ProfileImage from "@/components/navigation/ProfileImage.vue"
 import SubNav from "@/components/navigation/SubNav.vue"
@@ -64,11 +67,11 @@ export default {
         { menuName: "How we hire", url: "/" },
         { menuName: "Students", url: "/" },
         { menuName: "Jobs", url: "/jobs/results" }
-      ],
-      isLoggedIn: false
+      ]
     }
   },
   computed: {
+    ...mapState(useUserStore, ["isLoggedIn"]),
     headerHeightClass() {
       return {
         "h-16": !this.isLoggedIn,
@@ -77,12 +80,7 @@ export default {
     }
   },
   methods: {
-    loginUser() {
-      this.isLoggedIn = true
-    },
-    logoutUser() {
-      this.isLoggedIn = false
-    }
+    ...mapActions(useUserStore, ["loginUser", "logoutUser"])
   }
 }
 </script>
